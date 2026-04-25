@@ -1,23 +1,14 @@
-# Use lightweight and stable Nginx image
-FROM nginx:alpine
+# Use official Python image
+FROM python:3.10-slim
 
-# Set working directory inside container
-WORKDIR /usr/share/nginx/html
+# Set working directory
+WORKDIR /app
 
-# Remove default nginx files (clean slate)
-RUN rm -rf /usr/share/nginx/html/*
+# Copy project files
+COPY . .
 
-# Copy project files into nginx directory
-COPY . /usr/share/nginx/html
+# Install dependencies (if exists)
+RUN if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-# Fix permissions (safe for Jenkins + Docker)
-RUN chmod -R 755 /usr/share/nginx/html
-
-# Optional: ensure nginx has proper config ownership
-RUN chown -R nginx:nginx /usr/share/nginx/html
-
-# Expose web server port
-EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Default command (change file name if needed)
+CMD ["python", "app.py"]
