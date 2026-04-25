@@ -22,8 +22,6 @@ pipeline {
                 sh 'docker build -t game-app .'
             }
         }
-
-       stage('Docker Run') {
     stage('Docker Run') {
     steps {
         sh '''
