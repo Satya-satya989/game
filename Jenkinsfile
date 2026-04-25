@@ -23,13 +23,14 @@ pipeline {
             }
         }
 
-        stage('Docker Run') {
-            steps {
-                sh '''
-                docker run -d --name game-app -p 8080:80 game-app
-                '''
-            }
-        }
+       stage('Docker Run') {
+    steps {
+        sh '''
+        docker rm -f game-app || true
+        docker run -d --name game-app -p 9090:80 game-app
+        '''
+    }
+}
     }
 
     post {
