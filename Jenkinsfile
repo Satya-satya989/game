@@ -26,7 +26,7 @@ pipeline {
         stage('Docker Run') {
             steps {
                 sh '''
-                docker run -d --name game-app -p 3000:80 game-app
+                docker run -d --name game-app -p 8080:80 game-app
                 '''
             }
         }
