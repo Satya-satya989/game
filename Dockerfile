@@ -1,17 +1,14 @@
-# Use official Node base image
-FROM node:18
+# Use lightweight web server
+FROM nginx:alpine
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/share/nginx/html
 
-# Copy project files
+# Copy all project files into nginx folder
 COPY . .
 
-# Install dependencies
-RUN npm install
+# Expose default web port
+EXPOSE 80
 
-# Expose port (change if needed)
-EXPOSE 3000
-
-# Start application
-CMD ["npm", "start"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
