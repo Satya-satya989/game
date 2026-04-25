@@ -1,14 +1,20 @@
-# Use lightweight web server
+# Use lightweight and stable Nginx image
 FROM nginx:alpine
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /usr/share/nginx/html
 
-# Copy all project files into nginx folder
+# Remove default nginx static files (clean slate)
+RUN rm -rf ./*
+
+# Copy project files into nginx directory
 COPY . .
 
-# Expose default web port
+# Set proper permissions (avoids Jenkins permission issues sometimes)
+RUN chmod -R 755 /usr/share/nginx/html
+
+# Expose web server port
 EXPOSE 80
 
-# Start nginx
+# Start nginx server
 CMD ["nginx", "-g", "daemon off;"]
