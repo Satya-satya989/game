@@ -24,10 +24,11 @@ pipeline {
         }
 
        stage('Docker Run') {
+    stage('Docker Run') {
     steps {
         sh '''
         docker rm -f game-app || true
-        docker run -d --name game-app -p 9090:80 game-app
+        docker run -d --name game-app -p 9880:80 game-app
         '''
     }
 }
