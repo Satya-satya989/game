@@ -12,10 +12,7 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 sh '''
-                if [ $(docker ps -q -f name=game-app) ]; then
-                    docker stop game-app || true
-                    docker rm game-app || true
-                fi
+                docker rm -f game-app || true
                 '''
             }
         }
@@ -28,7 +25,9 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                sh 'docker run -d --name game-app -p 3000:3000 game-app'
+                sh '''
+                docker run -d --name game-app -p 3000:80 game-app
+                '''
             }
         }
     }
